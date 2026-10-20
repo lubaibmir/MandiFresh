@@ -5,10 +5,10 @@ import GoogleButton from '../components/GoogleButton.jsx';
 
 function Shell({ title, children, footer }) {
   return (
-    <div className="mx-auto max-w-md py-8">
-      <h1 className="text-3xl">{title}</h1>
-      <div className="card mt-6 space-y-4 p-6">{children}</div>
-      {footer && <p className="mt-5 text-center text-sm text-muted">{footer}</p>}
+    <div className="mx-auto max-w-md py-4 sm:py-8">
+      <h1 className="text-2xl sm:text-3xl">{title}</h1>
+      <div className="card mt-4 sm:mt-6 space-y-4 p-4 sm:p-6 lg:p-6">{children}</div>
+      {footer && <p className="mt-4 sm:mt-5 text-center text-sm text-muted">{footer}</p>}
     </div>
   );
 }
@@ -52,7 +52,7 @@ function RoleStep({ googleData, onCancel }) {
       </div>
       <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label="Account type">
         {[['customer', 'I want to buy'], ['vendor', 'I sell at the mandi']].map(([r, label]) => (
-          <button key={r} type="button" role="radio" aria-checked={role === r} onClick={() => setRole(r)} className={`chip ${role === r ? 'chip-on' : ''}`}>{label}</button>
+          <button key={r} type="button" role="radio" aria-checked={role === r} onClick={() => setRole(r)} className={`chip text-xs sm:text-sm px-2 sm:px-4 py-2 min-h-[40px] flex items-center justify-center text-center ${role === r ? 'chip-on' : ''}`}>{label}</button>
         ))}
       </div>
       <form onSubmit={submit} className="space-y-4">
@@ -70,8 +70,8 @@ function RoleStep({ googleData, onCancel }) {
         )}
         {error && <p className="error">{error}</p>}
         <div className="flex gap-3">
-          <button type="button" className="btn-ghost flex-1" onClick={onCancel} disabled={busy}>Cancel</button>
-          <button className="btn-primary flex-1" disabled={busy}>{busy ? 'Finishing...' : 'Finish signup'}</button>
+          <button type="button" className="btn-ghost flex-1 min-h-[40px]" onClick={onCancel} disabled={busy}>Cancel</button>
+          <button className="btn-primary flex-1 min-h-[40px]" disabled={busy}>{busy ? 'Finishing...' : 'Finish signup'}</button>
         </div>
       </form>
     </Shell>
@@ -120,7 +120,7 @@ export function Login() {
         <div><label className="label" htmlFor="email">Email</label><input id="email" type="email" required className="input" {...f('email')} /></div>
         <div><label className="label" htmlFor="pw">Password</label><input id="pw" type="password" required className="input" {...f('password')} /></div>
         {error && <p className="error">{error}</p>}
-        <button className="btn-primary w-full">Log in</button>
+        <button className="btn-primary w-full min-h-[44px]">Log in</button>
       </form>
       <div className="relative my-4 flex items-center justify-center">
         <div className="w-full border-t border-line" />
@@ -169,7 +169,7 @@ export function Register() {
     <Shell title="Create an account" footer={<>Already registered? <Link to="/login" className="text-forest underline">Log in</Link></>}>
       <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label="Account type">
         {[['customer', 'I want to buy'], ['vendor', 'I sell at the mandi']].map(([r, label]) => (
-          <button key={r} type="button" role="radio" aria-checked={form.role === r} onClick={() => setForm({ ...form, role: r })} className={`chip ${form.role === r ? 'chip-on' : ''}`}>{label}</button>
+          <button key={r} type="button" role="radio" aria-checked={form.role === r} onClick={() => setForm({ ...form, role: r })} className={`chip text-xs sm:text-sm px-2 sm:px-4 py-2 min-h-[40px] flex items-center justify-center text-center ${form.role === r ? 'chip-on' : ''}`}>{label}</button>
         ))}
       </div>
       <form onSubmit={submit} className="space-y-4">
@@ -186,7 +186,7 @@ export function Register() {
           <div><label className="label" htmlFor="address">Delivery address</label><textarea id="address" rows={2} className="input" {...f('address')} /></div>
         )}
         {error && <p className="error">{error}</p>}
-        <button className="btn-primary w-full">Create account</button>
+        <button className="btn-primary w-full min-h-[44px]">Create account</button>
       </form>
       <div className="relative my-4 flex items-center justify-center">
         <div className="w-full border-t border-line" />

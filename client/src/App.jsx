@@ -13,9 +13,9 @@ import { Login, Register } from './pages/Auth.jsx';
 
 export default function App() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col overflow-x-hidden">
       <Navbar />
-      <main className="mx-auto w-full max-w-6xl flex-1 px-5 py-8">
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 sm:px-5 lg:px-5 py-6 sm:py-8 lg:py-8">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/produce/:key" element={<Produce />} />

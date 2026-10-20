@@ -18,7 +18,16 @@
   .card { @apply rounded-2xl border border-line bg-white; }
   .chip { @apply rounded-full border border-line bg-white px-4 py-1.5 text-sm text-muted transition-colors hover:bg-mist; }
   .chip-on { @apply border-forest bg-forest text-white hover:bg-forest; }
-  .error { @apply rounded-xl bg-red-50 px-3.5 py-2.5 text-sm text-red-700; }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

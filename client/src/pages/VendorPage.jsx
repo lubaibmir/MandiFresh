@@ -20,8 +20,8 @@ function Row({ l, vendor }) {
   };
 
   return (
-    <tr className={`border-t border-line ${out ? 'opacity-50' : ''}`}>
-      <td className="py-3.5 pr-3">
+    <tr className={`border-t border-line grid grid-cols-[1fr_auto] items-start gap-y-3 py-4 sm:table-row sm:gap-y-0 sm:py-0 ${out ? 'opacity-50' : ''}`}>
+      <td className="col-start-1 sm:table-cell sm:py-3.5 sm:pr-3">
         <div className="flex items-center gap-3">
           {imageFor(l.name) ? (
             <img src={imageFor(l.name)} alt={l.name} className="h-10 w-10 shrink-0 rounded-lg object-cover" />
@@ -34,12 +34,12 @@ function Row({ l, vendor }) {
           </div>
         </div>
       </td>
-      <td className="whitespace-nowrap py-3.5 pr-3"><span className="font-semibold">{rupee(l.price)}</span><span className="text-sm text-muted">/{l.unit}</span></td>
-      <td className="py-3.5 text-right">
+      <td className="col-start-2 whitespace-nowrap text-right sm:text-left sm:table-cell sm:py-3.5 sm:pr-3"><span className="font-semibold">{rupee(l.price)}</span><span className="text-sm text-muted">/{l.unit}</span></td>
+      <td className="col-span-2 pt-1 sm:pt-0 sm:table-cell sm:py-3.5 sm:text-right">
         {out ? <span className="text-sm text-muted">Out of stock</span> : user?.role === 'vendor' ? null : (
-          <div className="flex items-center justify-end gap-3">
+          <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto">
             <Qty value={qty} onChange={(v) => setQty(Math.max(0.5, v))} />
-            <button className="btn-primary btn-sm w-24" onClick={onAdd}>{added ? 'Added' : 'Add'}</button>
+            <button className="btn-primary btn-sm flex-1 sm:flex-none sm:w-24 min-h-[40px] sm:min-h-0" onClick={onAdd}>{added ? 'Added' : 'Add'}</button>
           </div>
         )}
       </td>
@@ -59,11 +59,11 @@ export default function VendorPage() {
   return (
     <div>
       <Link to="/vendors" className="text-sm text-muted hover:underline">Back to vendors</Link>
-      <h1 className="mt-3 text-3xl" translate="no">{data.vendor.shopName}</h1>
-      <p className="text-muted">{data.vendor.stall ? <span translate="no">{data.vendor.stall}</span> : null}{data.vendor.phone && ` - ${data.vendor.phone}`}</p>
-      <div className="card mt-8 overflow-x-auto px-5">
-        <table className="w-full min-w-[520px] text-left">
-          <tbody>{data.listings.map((l) => <Row key={l._id} l={l} vendor={data.vendor} />)}</tbody>
+      <h1 className="mt-3 text-2xl sm:text-3xl break-words" translate="no">{data.vendor.shopName}</h1>
+      <p className="text-muted break-words">{data.vendor.stall ? <span translate="no">{data.vendor.stall}</span> : null}{data.vendor.phone && ` - ${data.vendor.phone}`}</p>
+      <div className="card mt-6 sm:mt-8 px-4 sm:px-5 sm:overflow-x-auto">
+        <table className="w-full text-left block sm:table sm:min-w-[520px]">
+          <tbody className="block sm:table-row-group divide-y divide-line sm:divide-y-0">{data.listings.map((l) => <Row key={l._id} l={l} vendor={data.vendor} />)}</tbody>
         </table>
         {data.listings.length === 0 && <p className="py-8 text-muted">This vendor hasn't posted prices yet.</p>}
       </div>
