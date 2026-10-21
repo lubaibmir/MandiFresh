@@ -7,16 +7,13 @@ import Qty from '../components/Qty.jsx';
 import { emojiFor, imageFor, rupee, timeAgo } from '../utils.js';
 
 function Row({ l, vendor }) {
-  const { add } = useCart();
+  const { items, add, setQty } = useCart();
   const { user } = useAuth();
-  const [qty, setQty] = useState(1);
-  const [added, setAdded] = useState(false);
   const out = !l.inStock;
+  const cartItem = items.find((i) => i.listingId === l._id && i.qty > 0);
 
   const onAdd = () => {
-    add({ listingId: l._id, name: l.name, unit: l.unit, price: l.price, qty, vendorId: vendor._id, vendorName: vendor.shopName });
-    setAdded(true);
-    setTimeout(() => setAdded(false), 1500);
+    add({ listingId: l._id, name: l.name, unit: l.unit, price: l.price, qty: 1, vendorId: vendor._id, vendorName: vendor.shopName });
   };
 
   return (
@@ -37,9 +34,12 @@ function Row({ l, vendor }) {
       <td className="col-start-2 whitespace-nowrap text-right sm:text-left sm:table-cell sm:py-3.5 sm:pr-3"><span className="font-semibold">{rupee(l.price)}</span><span className="text-sm text-muted">/{l.unit}</span></td>
       <td className="col-span-2 pt-1 sm:pt-0 sm:table-cell sm:py-3.5 sm:text-right">
         {out ? <span className="text-sm text-muted">Out of stock</span> : user?.role === 'vendor' ? null : (
-          <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto">
-            <Qty value={qty} onChange={(v) => setQty(Math.max(0.5, v))} />
-            <button className="btn-primary btn-sm flex-1 sm:flex-none sm:w-24 min-h-[40px] sm:min-h-0" onClick={onAdd}>{added ? 'Added' : 'Add'}</button>
+          <div className="flex items-center justify-end w-full sm:w-auto">
+            {cartItem ? (
+              <Qty value={cartItem.qty} onChange={(v) => setQty(l._id, v)} step={l.unit === 'kg' ? 0.5 : 1} />
+            ) : (
+              <button className="btn-primary btn-sm min-h-[40px] sm:min-h-0 w-28 sm:w-24" onClick={onAdd}>Add</button>
+            )}
           </div>
         )}
       </td>

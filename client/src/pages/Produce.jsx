@@ -7,15 +7,12 @@ import Qty from '../components/Qty.jsx';
 import { emojiFor, imageFor, rupee, timeAgo } from '../utils.js';
 
 function Offer({ offer, name, lowest }) {
-  const { add } = useCart();
+  const { items, add, setQty } = useCart();
   const { user } = useAuth();
-  const [qty, setQty] = useState(1);
-  const [added, setAdded] = useState(false);
+  const cartItem = items.find((i) => i.listingId === offer.listingId && i.qty > 0);
 
   const onAdd = () => {
-    add({ listingId: offer.listingId, name, unit: offer.unit, price: offer.price, qty, vendorId: offer.vendor.id, vendorName: offer.vendor.shopName });
-    setAdded(true);
-    setTimeout(() => setAdded(false), 1500);
+    add({ listingId: offer.listingId, name, unit: offer.unit, price: offer.price, qty: 1, vendorId: offer.vendor.id, vendorName: offer.vendor.shopName });
   };
 
   return (
@@ -32,9 +29,12 @@ function Offer({ offer, name, lowest }) {
         {user?.role === 'vendor' ? (
           <span className="text-xs text-muted">Vendors can't order</span>
         ) : (
-          <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto">
-            <Qty value={qty} onChange={(v) => setQty(Math.max(0.5, v))} />
-            <button className="btn-primary btn-sm flex-1 sm:flex-none sm:w-24 min-h-[40px] sm:min-h-0" onClick={onAdd}>{added ? 'Added' : 'Add'}</button>
+          <div className="flex items-center justify-end w-full sm:w-auto">
+            {cartItem ? (
+              <Qty value={cartItem.qty} onChange={(v) => setQty(offer.listingId, v)} step={offer.unit === 'kg' ? 0.5 : 1} />
+            ) : (
+              <button className="btn-primary btn-sm min-h-[40px] sm:min-h-0 w-28 sm:w-24" onClick={onAdd}>Add</button>
+            )}
           </div>
         )}
       </td>

@@ -65,7 +65,7 @@ export default function Cart() {
                       <div className="text-right font-semibold sm:hidden">{rupee(l.price * l.qty)}</div>
                     </div>
                     <div className="flex items-center justify-between sm:justify-end gap-3 sm:gap-4">
-                      <Qty value={l.qty} onChange={(v) => setQty(l.listingId, v)} />
+                      <Qty value={l.qty} onChange={(v) => setQty(l.listingId, v)} step={l.unit === 'kg' ? 0.5 : 1} />
                       <span className="hidden sm:inline-block w-20 text-right font-medium">{rupee(l.price * l.qty)}</span>
                       <button className="text-sm text-muted hover:text-red-600 min-h-[40px] sm:min-h-0 px-2 py-1 flex items-center" onClick={() => remove(l.listingId)}>Remove</button>
                     </div>
